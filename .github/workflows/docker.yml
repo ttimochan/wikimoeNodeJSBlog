@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  docker:
+  server-docker:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
