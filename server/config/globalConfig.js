@@ -62,6 +62,10 @@ const initGlobalConfig = async () => {
     siteExtraCss: '',
     // Gravatar头像图源
     siteGravatarSource: '',
+    // 页面加载动画
+    siteShowLoading: true,
+    // 加载动画文案
+    siteShowLoadingText: '',
   }
   const commentSettingsConfig = {
     // 开启评论
@@ -140,6 +144,19 @@ const initGlobalConfig = async () => {
     // 随机相似内容标题
     sitePostRandomSimilarTitle: '相似内容',
   }
+  // 广告
+  const adSettingsConfig = {
+    // 是否开启谷歌广告
+    googleAdEnabled: false,
+    // 谷歌广告ID
+    googleAdId: '',
+    // 开启文章底部谷歌广告
+    googleAdPostBottomEnabled: false,
+    // 文章底部谷歌参数
+    googleAdPostBottomParams: '',
+    // ads.txt
+    AdAdsTxt: '',
+  }
 
 
   // 写一个函数，先判断原始类型，再将字符串转换为对应的类型
@@ -171,6 +188,7 @@ const initGlobalConfig = async () => {
       emailSettings: emailSettingsConfig,
       otherSettings: otherSettingsConfig,
       sitePostSettings: sitePostSettingsConfig,
+      adSettings: adSettingsConfig,
     }
     // 将data转换为object
     const obj = {}
@@ -185,6 +203,7 @@ const initGlobalConfig = async () => {
     formatResToForm(config.emailSettings, obj)
     formatResToForm(config.otherSettings, obj)
     formatResToForm(config.sitePostSettings, obj)
+    formatResToForm(config.adSettings, obj)
     // 将配置挂载到global上
     global.$globalConfig = config;
     global.$Mint = new Mint(config.otherSettings.siteBannedKeywordList)

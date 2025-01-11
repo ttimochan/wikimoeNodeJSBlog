@@ -146,25 +146,31 @@ const linkCover = computed(() => {
 const observee = ref(null)
 let observer = null
 const linkCoverShow = ref(false)
+let timer = null
 onMounted(() => {
   nextTick(() => {
-    if (linkCover.value) {
-      observer = new IntersectionObserver((entries) => {
-        // 如果元素进入视口，entries[0].isIntersecting 将为 true
-        if (entries[0].isIntersecting) {
-          linkCoverShow.value = true
-          observer.disconnect()
-          observer = null
-        }
-      })
-      observer.observe(observee.value)
-    }
+    timer = setTimeout(() => {
+      if (linkCover.value && observee.value) {
+        // 如果元素不在视口内，创建 IntersectionObserver
+        observer = new IntersectionObserver((entries) => {
+          if (entries[0].isIntersecting) {
+            linkCoverShow.value = true
+            observer.disconnect()
+            observer = null
+          }
+        })
+        observer.observe(observee.value)
+      }
+    }, 100)
   })
 })
 onUnmounted(() => {
   if (observer) {
     observer.disconnect()
     observer = null
+  }
+  if (timer) {
+    clearTimeout(timer)
   }
 })
 </script>
